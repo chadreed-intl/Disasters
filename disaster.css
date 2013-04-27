@@ -8,9 +8,12 @@
   stroke: white;
 }
 
-.subunit.USA {
+/*.subunit.USA {
   fill: white;
- /*background-image: url('/FireBIG.jpg');*/
+}*/
+
+.active {
+  fill: #f47835;
 }
 
 

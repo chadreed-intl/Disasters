@@ -12,20 +12,34 @@ document.addEventListener("DOMContentLoaded", function(){
 			var path = d3.geo.path()
 			    .projection(projection);
 
+			var graticule = d3.geo.graticule();
+
 			var svg = d3.select("body").append("svg")
 			    .attr("width", width)
 			    .attr("height", height);
-
-			var graticule = d3.geo.graticule()
-			    .extent([[180, 180], [-180, -180]])
-			    .step([5, 5]);
 
 			d3.json("world.json", function(error, world) {
 			  svg.selectAll(".subunit")
 					.data(topojson.feature(world, world.objects.subunits).features)
 					.enter().append("path")
 					.attr("class", function(d) { return "subunit " + d.id; })
-					.attr("d", path);
+					.attr("d", path)
+			  	.on('mouseover', function(e) {
+				  	d3.select(this)
+				  		.transition()
+				  			// .duration(500)
+				  			.ease('cubic')
+								.attr('fill', '#ffc726')
+				  })
+				  .on('mouseout', function(e) {
+				  	d3.select(this)
+				  		.transition()
+				  			.ease('cubic')
+								.attr('fill', 'black')
+					})
+					.on('click', function(){
+						console.log($(this)[0].__data__.id);
+					});
 
 			  //Bordering
 			      //Exterior
@@ -40,12 +54,12 @@ document.addEventListener("DOMContentLoaded", function(){
 			    .attr("d", path)
 			    .attr("class", "border");
 
-			  svg.append("path")
-			    .datum(graticule)
-			    .attr("class", "graticule")
-			    .attr("d", path);
-
-
+			  // d3.select('.subunit').on('click', function(){
+			  // 	 console.log($(this));
+			  // 	 var activeCountry = $(this)[0].__data__.id;
+			  // 	 $(this[0]).addClass('active');
+			  // 	 console.log(activeCountry);
+			  // });
 
 			});
 }, false);
