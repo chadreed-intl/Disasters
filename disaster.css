@@ -1,0 +1,19 @@
+.border {
+  fill: none;
+  stroke: white;
+}
+
+.coast {
+  fill: none;
+  stroke: white;
+}
+
+.subunit.USA {
+  fill: white;
+ /*background-image: url('/FireBIG.jpg');*/
+}
+
+
+body {
+  background: #00aedb;
+}
