@@ -38,6 +38,9 @@ document.addEventListener("DOMContentLoaded", function(){
 				  			.ease('cubic')
 								.attr('fill', 'black')
 					})
+					.on('click', function() {
+						console.log($(this)[0].__data__.id);
+					})
         
 			  //Bordering
 			      //Exterior
@@ -62,6 +65,29 @@ document.addEventListener("DOMContentLoaded", function(){
 				  .datum(graticule.outline)
 				  .attr('class', 'graticule outline')
 				  .attr('d', path);
+
+			  svg.append("circle")
+			    .attr("r",5)
+			    .attr('fill', 'red')
+			    .attr("transform", function() {return "translate(" + projection([-75,43]) + ")";});
+
+        //EARTHQUAKE!!!
+			  setInterval(function(){
+			  	svg.append("circle")
+			    .attr("transform", function() {return "translate(" + projection([0,0]) + ")";})
+			    .attr('fill', 'none')
+			    .attr('r', 1)
+			    .style('stroke', 'red')
+			    .style('stroke-width', 5)
+			    .transition()
+			    .attr("r",50)
+			    .ease('sine')
+			    .style('stroke-opacity', 0)
+			    .duration(2000)
+			    .remove()
+			  }, 800);
+			  
+
 
 			  // d3.select('.subunit').on('click', function(){
 			  // 	 console.log($(this));
