@@ -8,14 +8,16 @@
   stroke: white;
 }
 
-/*.subunit.USA {
-  fill: white;
-}*/
-
 .active {
   fill: #f47835;
 }
 
+.graticule {
+  fill: none;
+  stroke: black;
+  stroke-opacity: .3;
+  stroke-width: .5px;
+}
 
 body {
   background: #00aedb;

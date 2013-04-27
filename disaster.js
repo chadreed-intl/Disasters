@@ -13,11 +13,12 @@ document.addEventListener("DOMContentLoaded", function(){
 			    .projection(projection);
 
 			var graticule = d3.geo.graticule();
+			console.log(graticule);
 
 			var svg = d3.select("body").append("svg")
 			    .attr("width", width)
 			    .attr("height", height);
-
+			  
 			d3.json("world.json", function(error, world) {
 			  svg.selectAll(".subunit")
 					.data(topojson.feature(world, world.objects.subunits).features)
@@ -37,10 +38,7 @@ document.addEventListener("DOMContentLoaded", function(){
 				  			.ease('cubic')
 								.attr('fill', 'black')
 					})
-					.on('click', function(){
-						console.log($(this)[0].__data__.id);
-					});
-
+        
 			  //Bordering
 			      //Exterior
 		    svg.append("path")
@@ -53,6 +51,17 @@ document.addEventListener("DOMContentLoaded", function(){
 			    .datum(topojson.mesh(world, world.objects.subunits, function(a, b) { return a !== b; }))
 			    .attr("d", path)
 			    .attr("class", "border");
+
+			  svg.append("path")
+			    .datum(graticule)
+			    .attr("class", "graticule line")
+			    .attr("d", path);
+
+			  //Lat, Long Lines
+			  svg.append('path')
+				  .datum(graticule.outline)
+				  .attr('class', 'graticule outline')
+				  .attr('d', path);
 
 			  // d3.select('.subunit').on('click', function(){
 			  // 	 console.log($(this));
