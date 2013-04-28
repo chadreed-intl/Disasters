@@ -1,7 +1,11 @@
-document.addEventListener("DOMContentLoaded", function(){
-  d3.csv('Disaster_Data.csv', function(data){
-  	console.log(data[575].Type);
+window.addEventListener("DOMContentLoaded", function(){
+  d3.csv('Wiki_Earthquake.csv', function(data){
+  	console.log(data[1338].Longitude)
+  	console.log(data[1338].Latitude);
   });
+
+  // var Long = data[1338].Longitude;
+  // var Lat = data[1338].Latitude;
 
 //Size of Map
 	var width = 1280;
@@ -78,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(){
     //EARTHQUAKE!!!
 	  setInterval(function(){
 	  	svg.append("circle")
-	    .attr("transform", function() {return "translate(" + projection([-97, 38]) + ")";})
+	    .attr("transform", function() {return "translate(" + projection([-97, 38.12]) + ")";})
 	    .attr('fill', 'none')
 	    .attr('r', 1)
 	    .style('stroke', 'red')
@@ -92,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	  }, 800);
 	  
 
-
 	  // d3.select('.subunit').on('click', function(){
 	  // 	 console.log($(this));
 	  // 	 var activeCountry = $(this)[0].__data__.id;
@@ -102,4 +105,3 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	});
 }, false);
-	
