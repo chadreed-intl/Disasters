@@ -1,29 +1,22 @@
 window.addEventListener("DOMContentLoaded", function(){
-  d3.csv('Wiki_Earthquake.csv', function(data){
-  	console.log(data[1338].Longitude)
-  	console.log(data[1338].Latitude);
-  });
-
-  // var Long = data[1338].Longitude;
-  // var Lat = data[1338].Latitude;
 
 //Size of Map
 	var width = 1280;
 	var height = 680;
 
 //Placement of Map
-	var projection = d3.geo.miller()
+	window.projection = d3.geo.miller()
 			.center([0,45])
 	    .scale(195)
 	    .translate([width / 2, height / 2.5]);
 
-	var path = d3.geo.path()
+	window.path = d3.geo.path()
 	    .projection(projection);
 
-	var graticule = d3.geo.graticule();
+	window.graticule = d3.geo.graticule();
 	
 
-	var svg = d3.select("body").append("svg")
+	window.svg = d3.select("body").append("svg")
 	    .attr("width", width)
 	    .attr("height", height);
 	  
@@ -34,74 +27,110 @@ window.addEventListener("DOMContentLoaded", function(){
 			.attr("class", function(d) { return "subunit " + d.id; })
 			.attr("d", path)
 	  	.on('mouseover', function(e) {
-		  	d3.select(this)
-		  		.transition()
-		  			// .duration(500)
-		  			.ease('cubic')
-						.attr('fill', '#ffc726')
+	  	  d3.select(this)
+	  	  .transition()
+	  		.ease('cubic')
+			  .attr('fill', '#ffc726')
 		  })
 		  .on('mouseout', function(e) {
-		  	d3.select(this)
-		  		.transition()
-		  			.ease('cubic')
-						.attr('fill', 'black')
+				d3.select(this)
+				.transition()
+				.ease('cubic')
+				.attr('fill', 'black')
 			})
 			.on('click', function() {
-				console.log($(this)[0].__data__.id);
+			  console.log($(this)[0].__data__.id);
 			})
     
 	  //Bordering
-	      //Exterior
+	    //Exterior
     svg.append("path")
 	    .datum(topojson.mesh(world, world.objects.subunits, function(a, b) { return a === b; }))
 	    .attr("d", path)
 	    .attr("class", "coast");
           
-          //Interior  
+      //Interior  
 	  svg.append("path")
 	    .datum(topojson.mesh(world, world.objects.subunits, function(a, b) { return a !== b; }))
 	    .attr("d", path)
 	    .attr("class", "border");
 
+	  //Lat, Long Lines
 	  svg.append("path")
 	    .datum(graticule)
 	    .attr("class", "graticule line")
 	    .attr("d", path);
-
-	  //Lat, Long Lines
+	  
 	  svg.append('path')
 		  .datum(graticule.outline)
 		  .attr('class', 'graticule outline')
 		  .attr('d', path);
 
-	  svg.append("circle")
-	    .attr("r",5)
-	    .attr('fill', 'red')
-	    .attr("transform", function() {return "translate(" + projection([-97, 38]) + ")";});
+		// longi = earthquakeData[1338].Longitude;
+    // lati = earthquakeData[1338].Latitude;
 
-    //EARTHQUAKE!!!
-	  setInterval(function(){
-	  	svg.append("circle")
-	    .attr("transform", function() {return "translate(" + projection([-97, 38.12]) + ")";})
-	    .attr('fill', 'none')
-	    .attr('r', 1)
-	    .style('stroke', 'red')
-	    .style('stroke-width', 5)
-	    .transition()
-	    .attr("r",50)
-	    .ease('sine')
-	    .style('stroke-opacity', 0)
-	    .duration(2000)
-	    .remove()
-	  }, 800);
-	  
+	  // All Earthquake Data
+    earthquakeData = [];
 
-	  // d3.select('.subunit').on('click', function(){
-	  // 	 console.log($(this));
-	  // 	 var activeCountry = $(this)[0].__data__.id;
-	  // 	 $(this[0]).addClass('active');
-	  // 	 console.log(activeCountry);
-	  // });
+	  d3.csv('Earthquake_Data.csv', function(data){
+	  	data.forEach(function(d){
+	  		earthquakeData.push(d);
+	  	});
+	  	hasEarthquakeData();
+	  });
+
+	  function hasEarthquakeData(){
+	  	// Coordinates for Each Earthquake
+		  coordinates = [];
+		  var coordMaker = function(earthquakeData) {
+		  	for (i = 0; i < earthquakeData.length; i++){
+		  		var eachCoord =[];
+		  		eachCoord.push(earthquakeData[i].Longitude);
+		  		eachCoord.push(earthquakeData[i].Latitude);
+		  		coordinates.push(eachCoord);
+		  	}
+		  	return coordinates;
+		  };
+		  coordMaker(earthquakeData);
+		  console.log(coordinates);
+
+		  svg.selectAll("circle-center")
+		    .data(coordinates)
+		    .enter()
+		    .append("circle")
+		    .attr("r", 0)
+		    .attr("fill", "red")
+		    .attr('opacity', 1)
+		    .attr("transform", function(d) {return "translate(" + projection(d) + ")";})
+		    .transition()
+		    .ease('sine')
+		    .delay(function(d, i ) { return i * 100 })
+		    .duration(1000)
+        .attr("r", 4)
+        .transition()
+        .delay(function(d, i ) { return i * 100 + 1000 })
+        .duration(1000)
+        .attr('opacity', 0.50);
+
+
+		  svg.selectAll("rings")
+		    .data(coordinates)
+		    .enter()
+		    .append("circle")
+		    .attr('r',0)
+		    .attr("transform", function(d) {return "translate(" + projection(d) + ")";})
+		    .transition()
+		    .delay(function(d, i ) { return i * 100 })
+		    .duration(5000)
+        .attr("r", 30)
+        .attr("fill", "none")
+		    .attr('stroke', 'red')
+		    .attr('stroke-width', 3)
+		    .remove()
+
+		  // 	 var activeCountry = $(this)[0].__data__.id;
+
+		}
 
 	});
 }, false);
