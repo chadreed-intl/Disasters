@@ -94,6 +94,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		  coordMaker(earthquakeData);
 		  console.log(coordinates);
 
+
+      //Make Epi-centers
 		  svg.selectAll("circle-center")
 		    .data(coordinates)
 		    .enter()
@@ -112,21 +114,25 @@ window.addEventListener("DOMContentLoaded", function(){
         .duration(1000)
         .attr('opacity', 0.50);
 
-
+      //Make Rings
 		  svg.selectAll("rings")
 		    .data(coordinates)
 		    .enter()
 		    .append("circle")
 		    .attr('r',0)
+		    .attr('stroke', 'red')
+		    // .attr('fill', none)
+		    .attr('stroke-opacity', 2)
 		    .attr("transform", function(d) {return "translate(" + projection(d) + ")";})
 		    .transition()
-		    .delay(function(d, i ) { return i * 100 })
-		    .duration(5000)
-        .attr("r", 30)
+		    .delay(function(d, i ) { return i * 99 })
+		    .duration(4500)
+        .attr('stroke-opacity', 0)
         .attr("fill", "none")
 		    .attr('stroke', 'red')
 		    .attr('stroke-width', 3)
-		    .remove()
+		    .attr("r", 30)
+		    .remove();
 
 		  // 	 var activeCountry = $(this)[0].__data__.id;
 
