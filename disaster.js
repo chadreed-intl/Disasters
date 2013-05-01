@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function(){
 
 //Placement of Map
 	window.projection = d3.geo.miller()
-			.center([0,45])
+			.center([0,35])
 	    .scale(195)
 	    .translate([width / 2, height / 2.5]);
 
@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", function(){
     
 	  //Bordering
 	    //Exterior
-    svg.append("path")
+      svg.append("path")
 	    .datum(topojson.mesh(world, world.objects.subunits, function(a, b) { return a === b; }))
 	    .attr("d", path)
 	    .attr("class", "coast");
@@ -65,9 +65,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		  .datum(graticule.outline)
 		  .attr('class', 'graticule outline')
 		  .attr('d', path);
-
-		// longi = earthquakeData[1338].Longitude;
-    // lati = earthquakeData[1338].Latitude;
 
 	  // All Earthquake Data
     earthquakeData = [];
@@ -92,7 +89,20 @@ window.addEventListener("DOMContentLoaded", function(){
 		  	return coordinates;
 		  };
 		  coordMaker(earthquakeData);
+		  // console.log(coordinates);
+
+		  var magMaker = function(earthquakeData) {
+		  	for (i = 0; i < earthquakeData.length; i++){
+		  		var re = /\d../;
+		  		coordinates[i].push(parseFloat(re.exec(earthquakeData[i].Magnitude)));
+		  	}
+		  	return coordinates;
+		  };
+		  magMaker(earthquakeData);
 		  console.log(coordinates);
+
+		  var dates = _.range(1900, 2012);
+
 
 
       //Make Epi-centers
@@ -108,11 +118,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		    .ease('sine')
 		    .delay(function(d, i ) { return i * 100 })
 		    .duration(1000)
-        .attr("r", 4)
-        .transition()
-        .delay(function(d, i ) { return i * 100 + 1000 })
-        .duration(1000)
-        .attr('opacity', 0.50);
+	        .attr("r", 4)
+	        .transition()
+	        .delay(function(d, i ) { return i * 100 + 1000 })
+	        .duration(1000)
+	        .attr('opacity', 0.50);
 
       //Make Rings
 		  svg.selectAll("rings")
@@ -125,14 +135,31 @@ window.addEventListener("DOMContentLoaded", function(){
 		    .attr('stroke-opacity', 2)
 		    .attr("transform", function(d) {return "translate(" + projection(d) + ")";})
 		    .transition()
-		    .delay(function(d, i ) { return i * 99 })
+		    .delay(function(d, i ) { return i * 100 })
 		    .duration(4500)
-        .attr('stroke-opacity', 0)
-        .attr("fill", "none")
+	        .attr('stroke-opacity', 0)
+	        .attr("fill", "none")
 		    .attr('stroke', 'red')
 		    .attr('stroke-width', 3)
-		    .attr("r", 30)
+		    .attr("r", function(d, i) {  return Math.pow(d[2], 10) / 10000000})
 		    .remove();
+
+		  svg.selectAll("text")
+		    .data(dates)
+		    .enter()
+		    .append('text')
+		    .text(function(d) { return d; })
+		    .attr('x', 50)
+		    .attr('y', 600)
+		    .attr('fill', 'none')
+		    .attr('opacity', .6)
+		    .attr('font-family', 'sans-serif')
+		    .attr('font-size', '100px')
+		    .transition()
+		    .delay(function(d, i){ return i * 1220})
+		    .duration(1220)
+		    .attr('fill','black')
+		    .remove()
 
 		  // 	 var activeCountry = $(this)[0].__data__.id;
 
