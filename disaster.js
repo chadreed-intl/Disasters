@@ -6,9 +6,9 @@ window.addEventListener("DOMContentLoaded", function(){
 
 //Placement of Map
 	window.projection = d3.geo.miller()
-			.center([0,35])
-	    .scale(195)
-	    .translate([width / 2, height / 2.5]);
+		.center([0,35])
+	  .scale(195)
+	  .translate([width / 2, height / 2.5]);
 
 	window.path = d3.geo.path()
 	    .projection(projection);
@@ -20,27 +20,12 @@ window.addEventListener("DOMContentLoaded", function(){
 	    .attr("width", width)
 	    .attr("height", height);
 	  
-	d3.json("world.json", function(error, world) {
+	d3.json("resources/world.json", function(error, world) {
 	  svg.selectAll(".subunit")
 			.data(topojson.feature(world, world.objects.subunits).features)
 			.enter().append("path")
-			.attr("class", function(d) { return "subunit " + d.id; })
+			.attr("class", function(d) { return "subunit" + d.id; })
 			.attr("d", path)
-	  	.on('mouseover', function(e) {
-	  	  d3.select(this)
-	  	  .transition()
-	  		.ease('cubic')
-			  .attr('fill', '#ffc726')
-		  })
-		  .on('mouseout', function(e) {
-				d3.select(this)
-				.transition()
-				.ease('cubic')
-				.attr('fill', 'black')
-			})
-			.on('click', function() {
-			  console.log($(this)[0].__data__.id);
-			})
     
 	  //Bordering
 	    //Exterior
@@ -61,15 +46,15 @@ window.addEventListener("DOMContentLoaded", function(){
 	    .attr("class", "graticule line")
 	    .attr("d", path);
 	  
-	  svg.append('path')
+	  svg.append("path")
 		  .datum(graticule.outline)
-		  .attr('class', 'graticule outline')
-		  .attr('d', path);
+		  .attr("class", "graticule outline")
+		  .attr("d", path);
 
-	  // All Earthquake Data
+	// All Earthquake Data
     earthquakeData = [];
 
-	  d3.csv('Earthquake_Data.csv', function(data){
+	  d3.csv("Resources/Earthquake_Data.csv", function(data){
 	  	data.forEach(function(d){
 	  		earthquakeData.push(d);
 	  	});
@@ -101,7 +86,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		  magMaker(earthquakeData);
 		  console.log(coordinates);
 
-		  var dates = _.range(1900, 2012);
+		  var dates = _.range(1900, 2013);
 
 
 
@@ -112,53 +97,53 @@ window.addEventListener("DOMContentLoaded", function(){
 		    .append("circle")
 		    .attr("r", 0)
 		    .attr("fill", "red")
-		    .attr('opacity', 1)
+		    .attr("opacity", 1)
 		    .attr("transform", function(d) {return "translate(" + projection(d) + ")";})
 		    .transition()
-		    .ease('sine')
+		    .ease("sine")
 		    .delay(function(d, i ) { return i * 100 })
 		    .duration(1000)
 	        .attr("r", 4)
 	        .transition()
 	        .delay(function(d, i ) { return i * 100 + 1000 })
 	        .duration(1000)
-	        .attr('opacity', 0.50);
+	        .attr("opacity", 0.50);
 
       //Make Rings
 		  svg.selectAll("rings")
 		    .data(coordinates)
 		    .enter()
 		    .append("circle")
-		    .attr('r',0)
-		    .attr('stroke', 'red')
-		    // .attr('fill', none)
-		    .attr('stroke-opacity', 2)
+		    .attr("r",0)
+		    .attr("stroke", "red")
+		    // .attr("fill", none)
+		    .attr("stroke-opacity", 2)
 		    .attr("transform", function(d) {return "translate(" + projection(d) + ")";})
 		    .transition()
 		    .delay(function(d, i ) { return i * 100 })
 		    .duration(4500)
-	        .attr('stroke-opacity', 0)
+	        .attr("stroke-opacity", 0)
 	        .attr("fill", "none")
-		    .attr('stroke', 'red')
-		    .attr('stroke-width', 3)
+		    .attr("stroke", "red")
+		    .attr("stroke-width", 3)
 		    .attr("r", function(d, i) {  return Math.pow(d[2], 10) / 10000000})
 		    .remove();
 
 		  svg.selectAll("text")
 		    .data(dates)
 		    .enter()
-		    .append('text')
+		    .append("text")
 		    .text(function(d) { return d; })
-		    .attr('x', 50)
-		    .attr('y', 600)
-		    .attr('fill', 'none')
-		    .attr('opacity', .6)
-		    .attr('font-family', 'sans-serif')
-		    .attr('font-size', '100px')
+		    .attr("x", 50)
+		    .attr("y", 600)
+		    .attr("fill", "none")
+		    .attr("opacity", .6)
+		    .attr("font-family", "sans-serif")
+		    .attr("font-size", "100px")
 		    .transition()
-		    .delay(function(d, i){ return i * 1220})
-		    .duration(1220)
-		    .attr('fill','black')
+		    .delay(function(d, i){ return i * 1200})
+		    .duration(1200)
+		    .attr("fill","black")
 		    .remove()
 
 		}
