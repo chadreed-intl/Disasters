@@ -21,9 +21,10 @@
 
 .top {
 	text-align: center;
-	text-shadow: 1px 1px 2px black, 0 0 1em white, 0 0 0.1em white;
+	text-shadow: 1px 1px 2px black;
+  font: 2.2em Courier;
+  font-style: italic;
   color: white;
-  font: 2.2em Georgia;
 	overflow: hidden;
 	width: 100%;
 	background-image: url('header_bground.jpg');

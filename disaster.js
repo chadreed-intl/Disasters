@@ -161,8 +161,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		    .attr('fill','black')
 		    .remove()
 
-		  // 	 var activeCountry = $(this)[0].__data__.id;
-
 		}
 
 	});
