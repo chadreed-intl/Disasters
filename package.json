@@ -1,0 +1,11 @@
+{
+  "name": "TerreMoto",
+  "subdomain": "chadreed-Disasters",
+  "scripts": {
+    "start": ""
+  },
+  "version": "0.0.1",
+  "engines": {
+    "node": "0.8.x"
+  }
+}

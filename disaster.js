@@ -54,7 +54,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	// All Earthquake Data
     earthquakeData = [];
 
-	  d3.csv("Resources/Earthquake_Data.csv", function(data){
+	  d3.csv("Resources/Earthquake_Data1.csv", function(data){
 	  	data.forEach(function(d){
 	  		earthquakeData.push(d);
 	  	});
@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		  	return coordinates;
 		  };
 		  coordMaker(earthquakeData);
-		  // console.log(coordinates);
+		  
 
 		  var magMaker = function(earthquakeData) {
 		  	for (i = 0; i < earthquakeData.length; i++){
@@ -86,7 +86,14 @@ window.addEventListener("DOMContentLoaded", function(){
 		  magMaker(earthquakeData);
 		  console.log(coordinates);
 
-		  var dates = _.range(1900, 2013);
+		  dates = [];
+		  var dateTaker = function(earthquakeData) {
+		  	for (i = 0; i < earthquakeData.length; i++){
+		  		dates.push(earthquakeData[i]["Origin (UTC)"].slice(-4));
+		  	}
+		  	return dates;
+		  };
+		  dateTaker(earthquakeData);
 
 
 
@@ -141,12 +148,10 @@ window.addEventListener("DOMContentLoaded", function(){
 		    .attr("font-family", "sans-serif")
 		    .attr("font-size", "100px")
 		    .transition()
-		    .delay(function(d, i){ return i * 1200})
-		    .duration(1200)
+		    .delay(function(d, i){ return i * 100 + 1000})
+		    // .duration(1200)
 		    .attr("fill","black")
 		    .remove()
-
 		}
-
 	});
 }, false);
