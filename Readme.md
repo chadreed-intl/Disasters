@@ -1,5 +1,8 @@
 Terremoto
 =========
+terremoto.herokuapp.com
+------------------------
+
 Terremoto is a D3.js visualizer of Earthquake Data.
 -Watch as earthquakes are shown over 112 years from 1900-2012
 -Data comes from USGS and Wikipedia
