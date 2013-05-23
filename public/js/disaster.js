@@ -25,7 +25,7 @@ var aboutInfo = ["Earthquake data from Wikipedia, and the USGS.", "Each event is
 	    .attr("width", width)
 	    .attr("height", height);
 	  
-	d3.json("resources/world.json", function(error, world) {
+	d3.json("../resources/world.json", function(error, world) {
 	  svg.selectAll(".subunit")
 			.data(topojson.feature(world, world.objects.subunits).features)
 			.enter().append("path")
@@ -59,7 +59,7 @@ var aboutInfo = ["Earthquake data from Wikipedia, and the USGS.", "Each event is
 	// All Earthquake Data
     earthquakeData = [];
 
-	  d3.csv("Resources/Earthquake_Data1.csv", function(data){
+	  d3.csv("../resources/Earthquake_Data1.csv", function(data){
 	  	data.forEach(function(d){
 	  		earthquakeData.push(d);
 	  	});
