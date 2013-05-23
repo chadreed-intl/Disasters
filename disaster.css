@@ -102,18 +102,25 @@
 
 .top {
   text-align: center;
+  margin-left: 80px;
   text-shadow: 1px 1px 2px black;
   font-family: "TitilliumText25L250wt";
   font-size: 2.2em;
   color: white;
 }
 
+.icon-info {
+  float: right;
+  margin-right: 30px;
+  font-size: 40px;
+  line-height: 55px;
+}
+
 .icon-github-sign {
   float: right;
-  margin-right: 40px;
+  margin-right: 30px;
   font-size: 40px;
   line-height: 50px;
-  position: right;
 }
 
 a {
@@ -137,3 +144,19 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+/*.rect .about {
+  font-size: 20px;
+  border-radius: 50px;
+  border: 2px solid black;
+}*/
+
+/*.about {
+  height: 100px;
+  width: 100px;
+  display: none;
+  position: absolute;
+  right: 40px;
+  background-color: #7f7f7f;
+  op
+}*/

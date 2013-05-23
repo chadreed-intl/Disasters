@@ -1,4 +1,6 @@
 window.addEventListener("DOMContentLoaded", function(){
+//About Info
+var aboutInfo = ["Earthquake data from Wikipedia, and the USGS. <br> Each magnitude is exaggerated in order to visualize the the differences in each order in magnitude."];
 
 //Size of Map
 	var width = 1280;
@@ -154,4 +156,41 @@ window.addEventListener("DOMContentLoaded", function(){
 		    .remove()
 		}
 	});
+
+    $(".icon-info").on("click", function(){
+        svg.append("rect")
+        .attr("class", "about")
+        .attr("fill", "#7f7f7f")
+        .attr("width", 250)
+        .attr("height", 150)
+        .attr("rx", 5)
+        .attr("ry", 5)
+        .attr("x", 1000)
+        .attr("y", -150)
+        .attr("opacity", .8)
+        .transition()
+        .ease("sine")
+        .duration(1500)
+        .attr("y", -5)
+
+        svg.selectAll("aboutInfo")
+		    .data(aboutInfo)
+		    .enter()
+		    .append("text")
+		    .text(function(d) { return d; })
+		    .attr("x", 1000)
+		    .attr("y", -150)
+		    .attr("dx", -110)
+        .attr("dy", "1.2em")
+        .attr("text-anchor", "middle")
+		    .attr("fill", "white")
+		    .attr("opacity", 1)
+		    .attr("font-family", "sans-serif")
+		    .attr("font-size", "12px")
+		    .transition()
+		    .ease("sine")
+        .duration(1500)
+        .attr("y", 25)
+      });
+
 }, false);
