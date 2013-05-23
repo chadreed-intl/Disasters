@@ -2,7 +2,7 @@ Terremoto
 =========
 terremoto.herokuapp.com
 ------------------------
-![Earthquakes](http://example.com/images/terremoto.png)
+![Earthquakes](https://github.com/chadreed-intl/Disasters/blob/master/public/img/terremoto.jpg)
 
 Terremoto is a D3.js visualizer of Earthquake Data.
 -Watch as earthquakes are shown over 112 years from 1900-2012
